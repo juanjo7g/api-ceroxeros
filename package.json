@@ -1,0 +1,28 @@
+{
+  "name": "api-ceroxeros",
+  "version": "1.0.0",
+  "description": "Api en node.js para backend de la aplicación móvil.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tinez7g/api-ceroxeros.git"
+  },
+  "keywords": [
+    "api",
+    "backend",
+    "electroestimulador",
+    "ceroxeros"
+  ],
+  "author": "Juan <tinez7g@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tinez7g/api-ceroxeros/issues"
+  },
+  "homepage": "https://github.com/tinez7g/api-ceroxeros#readme",
+  "engines": {
+    "node": "5.7.1"
+  }
+}
