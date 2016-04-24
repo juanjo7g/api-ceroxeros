@@ -24,5 +24,8 @@
   "homepage": "https://github.com/tinez7g/api-ceroxeros#readme",
   "engines": {
     "node": "5.7.1"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
