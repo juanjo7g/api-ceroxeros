@@ -1,4 +1,4 @@
-{server
+{
   "name": "api-ceroxeros",
   "version": "1.0.0",
   "description": "Api en node.js para backend de la aplicación móvil.",
