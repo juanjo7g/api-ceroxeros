@@ -39,6 +39,6 @@
     "jshint-stylish": "^0.4.0",
     "gulp-load-plugins": "^0.6.0",
     "gulp-plumber": "^0.6.5",
-    "supertest": "^1.2.0",
+    "supertest": "^1.2.0"
   }
 }
