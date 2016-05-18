@@ -12,9 +12,9 @@ var URL_DB = config.mongodb.URL;
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-mongoose.connect(URL_DB, function(err, res) {  
+mongoose.connect(URL_DB, function(err, res) {
   if(err) {
-    console.log('ERROR: connecting to Database. ' + err);
+    return console.log('ERROR: connecting to Database. ' + err);
   }
   app.listen(PUERTO, function(){
         console.log('Escuchando en el puerto ' + PUERTO);
