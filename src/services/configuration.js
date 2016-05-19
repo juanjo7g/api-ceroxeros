@@ -6,8 +6,20 @@ var router = express.Router();
 var Configuration = require('../models/configuration.js');
 var User = require('../models/user.js');
 
+var routes = require('../routes');
+var user_id = '';
+
 router.get('/get', function (req, res){
-  res.send('Bienvenido al root');
+  user_id = routes.user_id;
+  Configuration.find({user_id: user_id}, function(err, data) {
+    if (err) {
+		  return res.status(500).json({ success: false, data: err.message});
+		}
+    if (data == null) {
+      return res.status(401).json({ success: false, data: "Usuario sin configurations"});
+    }
+    return res.status(200).json(data);
+  });
 });
 
 router.post('/post', function (req, res){
