@@ -10,11 +10,11 @@ var routes = require('../routes');
 var user_id = '';
 
 router.get('/get', function (req, res){
-  user_id = routes.user_id;
+  user_id = routes.user_id_get; // Se obtiene un id de usuario valido si el token es correcto.
   Configuration.find({user_id: user_id}, function(err, data) {
     if (err) {
-		  return res.status(500).json({ success: false, data: err.message});
-		}
+          return res.status(500).json({ success: false, data: err.message});
+        }
     if (data == null) {
       return res.status(401).json({ success: false, data: "Usuario sin configurations"});
     }
@@ -23,43 +23,45 @@ router.get('/get', function (req, res){
 });
 
 router.post('/post', function (req, res){
-  console.log(req.body);
+  user_id = routes.user_id_post;
+
   var name = req.body.name;
   var mode = req.body.mode;
   var intensity = req.body.intensity;
-  var token = req.body.token;
-  var user_id;
 
-  if (token == undefined || token == ''){
-    return res.status(401).json({ success: false, data: "ERROR token invalido"});
+  if (mode == undefined || mode == '') {
+    return res.status(401).json({ success: false, data: 'Modo invalido'});
   }
-
-  User.findOne({token: token}, function(err, data) {
-    if (err) {
-		  return res.status(500).json({ success: false, data: err.message});
-		}
-    if (data == null) {
-      return res.status(401).json({ success: false, data: "ERROR token invalido"});
-    }
-    user_id = data._id;
-
-    var configuration = new Configuration({
-      name: name,
-      mode: mode,
-      intensity: intensity,
-      user_id: user_id
-    });
-
-    configuration.save(function(err, data) {
-  		if(err) {
-  		  return res.status(500).json({ success: false, data: err.message});
-  		}
-      res.status(200).json({success: true, data: data});
-  	});
+  if (intensity == undefined || intensity == '') {
+    return res.status(401).json({ success: false, data: 'Intensidad invalida'});
+  }
+  var configuration = new Configuration({
+    name: name,
+    mode: mode,
+    intensity: intensity,
+    user_id: user_id
+  });
+  configuration.save(function(err, data) {
+      if(err) {
+        return res.status(500).json({ success: false, data: err.message});
+      }
+    res.status(200).json({success: true, data: data});
   });
 });
 
 router.delete('/delete', function (req, res){
+  user_id = routes.user_id_post;
+  var _id = req.body._id;
+
+  Configuration.findOne({_id: _id}, function(err, data) {
+    if (err) {
+      return res.status(500).json({ success: false, data: err.message});
+    }
+    if (data == null) {
+      return res.status(401).json({ success: false, data: "Configuracion no existe"});
+    }
+    return res.status(200).json({ success: true, data : data });
+  });
 });
 // getAll,put, delete, update ....
 
