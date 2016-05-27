@@ -9,7 +9,7 @@ var user_id_post = '';
 var token = '';
 
 router.get('*', function(req, res, next) {
-  if (req.path === '/api/v1/user/get') return next();
+  if (req.path === '/api/v1/user/login') return next();
   token = req.query.token;
   if (token == undefined || token == ''){
     return res.status(401).json({ success: false, data: "ERROR token invalido"});
@@ -28,6 +28,23 @@ router.get('*', function(req, res, next) {
 
 router.post('*', function(req, res, next) {
   if (req.path === '/api/v1/user/post') return next();
+  token = req.body.token;
+  if (token == undefined || token == ''){
+    return res.status(401).json({ success: false, data: "ERROR token invalido"});
+  }
+  User.findOne({token: token}, function(err, data) {
+    if (err) {
+          return res.status(500).json({ success: false, data: err.message});
+        }
+    if (data == null) {
+      return res.status(401).json({ success: false, data: "ERROR token invalido"});
+    }
+    exports.user_id_post = data._id;
+    next();
+  });
+});
+
+router.delete('*', function(req, res, next) {
   token = req.body.token;
   if (token == undefined || token == ''){
     return res.status(401).json({ success: false, data: "ERROR token invalido"});

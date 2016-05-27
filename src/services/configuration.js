@@ -60,7 +60,12 @@ router.delete('/delete', function (req, res){
     if (data == null) {
       return res.status(401).json({ success: false, data: "Configuracion no existe"});
     }
-    return res.status(200).json({ success: true, data : data });
+    Configuration.remove({ _id: _id }, function(err) {
+      if (err) {
+        return res.status(500).json({ success: false, data: err.message});
+      }
+      return res.status(200).json({ success: true, data : data });
+    });
   });
 });
 // getAll,put, delete, update ....

@@ -7,7 +7,7 @@ var router = express.Router();
 // Modelo
 var User = require('../models/user.js');
 
-router.get('/get', function (req, res){
+router.get('/login', function (req, res){
   var username = req.query.username;
   var password = req.query.password;
 
