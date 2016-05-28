@@ -30,10 +30,10 @@ router.post('/post', function (req, res){
   var intensity = req.body.intensity;
 
   if (mode == undefined || mode == '') {
-    return res.status(401).json({ success: false, data: 'Modo invalido'});
+    return res.status(400).json({ success: false, data: 'Modo invalido'});
   }
   if (intensity == undefined || intensity == '') {
-    return res.status(401).json({ success: false, data: 'Intensidad invalida'});
+    return res.status(400).json({ success: false, data: 'Intensidad invalida'});
   }
   var configuration = new Configuration({
     name: name,
@@ -58,7 +58,7 @@ router.delete('/delete', function (req, res){
       return res.status(500).json({ success: false, data: err.message});
     }
     if (data == null) {
-      return res.status(401).json({ success: false, data: "Configuracion no existe"});
+      return res.status(404).json({ success: false, data: "Configuracion no existe"});
     }
     Configuration.remove({ _id: _id }, function(err) {
       if (err) {

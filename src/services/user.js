@@ -44,13 +44,15 @@ router.post('/post', function (req, res){
   if (username == undefined || username == '') {
     return res.status(400).json({ success: false, data: 'Usuario invalido'});
   }
+  if (password1 == undefined || password1 == '' || password2 == undefined || password2 == '') {
+    return res.status(400).json({ success: false, data: 'Contraseña invalida'});
+  }
   if (password1 != password2) {
     return res.status(400).json({ success: false, data: 'Las contraseñas no coinciden'});
   }
   if (!util.validarEmail(email)) {
     return res.status(400).json({ success: false, data: 'Email invalido'});
   }
-  //Todo: validar que el username no este repetido
   if (token == undefined || token == '') {
     token = util.generateToken();
   }
@@ -63,13 +65,20 @@ router.post('/post', function (req, res){
     name: name,
     token: token
   });
-
-  user.save(function(err, data) {
-		if(err) {
-		  return res.status(500).json({ success: false, data: err.message});
-		}
-    res.status(200).json({success: true, data: data});
-	});
+  User.findOne({username: username}, function(err, data) {
+    if (err) {
+      return res.status(500).json({ success: false, data: err.message});
+    }
+    if (data != null) {
+      return res.status(400).json({ success: false, data: "Usuario invalido"});
+    }
+    user.save(function(err, data) {
+  		if(err) {
+  		  return res.status(500).json({ success: false, data: err.message});
+  		}
+      res.status(200).json({success: true, data: data});
+  	});
+  });
 });
 
 module.exports = router;
