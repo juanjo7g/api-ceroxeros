@@ -96,7 +96,7 @@ describe("Prueba Unitaria services/configuration.js",function(){
   it("Prueba metodo delete sin token",function(done){
     var body = { };
     server
-    .delete("/api/v1/configuration/delete")
+    .post("/api/v1/configuration/delete")
     .type('form')
     .send(body)
     .expect(401)
@@ -109,7 +109,7 @@ describe("Prueba Unitaria services/configuration.js",function(){
   it("Prueba metodo delete con token invalido",function(done){
     var body = { token : token + 'invalido'};
     server
-    .delete("/api/v1/configuration/delete")
+    .post("/api/v1/configuration/delete")
     .type('form')
     .send(body)
     .expect(401)
@@ -122,7 +122,7 @@ describe("Prueba Unitaria services/configuration.js",function(){
   it("Prueba metodo delete con token valido y con id invalido",function(done){
     var body = { token : token };
     server
-    .delete("/api/v1/configuration/delete")
+    .post("/api/v1/configuration/delete")
     .type('form')
     .send(body)
     .expect(404)
@@ -135,7 +135,7 @@ describe("Prueba Unitaria services/configuration.js",function(){
   it("Prueba metodo delete con token valido y con id valido",function(done){
     var body = { token : token, _id : id_configuration };
     server
-    .delete("/api/v1/configuration/delete")
+    .post("/api/v1/configuration/delete")
     .type('form')
     .send(body)
     .expect(200)

@@ -49,7 +49,7 @@ router.post('/post', function (req, res){
   });
 });
 
-router.delete('/delete', function (req, res){
+router.post('/delete', function (req, res){
   user_id = routes.user_id_post;
   var _id = req.body._id;
 
