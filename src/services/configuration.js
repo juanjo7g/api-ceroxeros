@@ -16,7 +16,7 @@ router.get('/get', function (req, res){
           return res.status(500).json({ success: false, data: err.message});
         }
     if (data == null) {
-      return res.status(401).json({ success: false, data: "Usuario sin configurations"});
+      return res.status(200).json({ success: false, data: "Usuario sin configurations"});
     }
     return res.status(200).json(data);
   });

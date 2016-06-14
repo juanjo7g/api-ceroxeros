@@ -32,6 +32,54 @@ router.get('/login', function (req, res){
   });
 });
 
+router.post('/loginFb', function (req, res){
+  console.log(req.body);
+  var email = req.body.email;
+  var name = req.body.name;
+  var token = req.body.token;
+  var userFbId = req.body.userFbId;
+
+  if (userFbId == undefined || userFbId == '') {
+    return res.status(400).json({ success: false, data: 'userFbId invalido'});
+  }
+  if (token == undefined || token == '') {
+    return res.status(400).json({ success: false, data: 'tokenFB invalido'});
+  }
+  if (!util.validarEmail(email)) {
+    return res.status(400).json({ success: false, data: 'Email invalido'});
+  }
+
+  User.findOne({email: email}, function(err, userExisting) {
+    if (err) {
+      return res.status(500).json({ success: false, data: err.message});
+    }
+    if (userExisting != null) {
+      userExisting.token = token;
+      userExisting.userFbId = userFbId;
+      userExisting.name = name;
+      userExisting.save(function(err, data) {
+    		if(err) {
+    		  return res.status(500).json({ success: false, data: err.message});
+    		}
+        return res.status(200).json({success: true, data: data});
+    	});
+    } else {
+      var user = new User ({
+        email: email,
+        name: name,
+        token: token,
+        userFbId : userFbId
+      });
+      user.save(function(err, data) {
+    		if(err) {
+    		  return res.status(500).json({ success: false, data: err.message});
+    		}
+        res.status(200).json({success: true, data: data});
+    	});
+    }
+  });
+});
+
 router.post('/post', function (req, res){
   console.log(req.body);
   var username = req.body.username;

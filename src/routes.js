@@ -27,7 +27,11 @@ router.get('*', function(req, res, next) {
 });
 
 router.post('*', function(req, res, next) {
-  if (req.path === '/api/v1/user/post') return next();
+  if (req.path === '/api/v1/user/post'
+      || req.path === '/api/v1/user/loginFb'
+      || req.path === '/api/v1/qualification/post'){
+    return next();
+  }
   token = req.body.token;
   if (token == undefined || token == ''){
     return res.status(401).json({ success: false, data: "ERROR token invalido"});
@@ -63,5 +67,6 @@ router.delete('*', function(req, res, next) {
 
 router.use('/api/v1/user',require('./services/user'));
 router.use('/api/v1/configuration',require('./services/configuration'));
+router.use('/api/v1/qualification',require('./services/qualification'));
 
 module.exports = router;

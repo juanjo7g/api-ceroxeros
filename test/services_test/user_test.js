@@ -47,6 +47,19 @@ describe("Prueba Unitaria services/user.js",function(){
     });
   });
 
+  it("Prueba metodo login con FB sin userFbId, token ni email",function(done){
+    var body = {};
+    server
+    .post("/api/v1/user/loginFb")
+    .type('form')
+    .send(body)
+    .expect(400)
+    .end(function(err,res){
+      res.status.should.equal(400);
+      done();
+    });
+  });
+
   it("Prueba metodo post sin usuario y contraseñas",function(done){
     var body = {};
     server
