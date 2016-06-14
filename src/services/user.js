@@ -61,7 +61,7 @@ router.post('/loginFb', function (req, res){
     		if(err) {
     		  return res.status(500).json({ success: false, data: err.message});
     		}
-        return res.status(200).json({success: true, data: data});
+        return res.status(200).json(data);
     	});
     } else {
       var user = new User ({
@@ -74,7 +74,7 @@ router.post('/loginFb', function (req, res){
     		if(err) {
     		  return res.status(500).json({ success: false, data: err.message});
     		}
-        res.status(200).json({success: true, data: data});
+        res.status(200).json(data);
     	});
     }
   });
