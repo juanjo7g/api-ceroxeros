@@ -43,7 +43,8 @@ router.post('/post', function (req, res){
         mode: mode,
         intensity: intensity,
         ratings: [quantity],
-        feedbacks: [feedback]
+        feedbacks: [feedback],
+        average: quantity
       });
       qualification.save(function(err, data) {
           if(err) {
