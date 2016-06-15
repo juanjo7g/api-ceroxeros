@@ -20,4 +20,14 @@ describe("Prueba Unitaria services/configuration.js",function(){
     });
   });
 
+  it("Prueba metodo getAll",function(done){
+    server
+    .get("/api/v1/qualification/getAll")
+    .expect(200)
+    .end(function(err,res){
+      res.status.should.equal(200);
+      done();
+    });
+  });
+
 });

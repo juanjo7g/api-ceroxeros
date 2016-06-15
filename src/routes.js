@@ -9,7 +9,10 @@ var user_id_post = '';
 var token = '';
 
 router.get('*', function(req, res, next) {
-  if (req.path === '/api/v1/user/login') return next();
+  if (req.path === '/api/v1/user/login'
+      || req.path === '/api/v1/qualification/getAll'){
+    return next();
+  }
   token = req.query.token;
   if (token == undefined || token == ''){
     return res.status(401).json({ success: false, data: "ERROR token invalido"});

@@ -34,4 +34,13 @@ router.post('/post', function (req, res){
   });
 });
 
+router.get('/getAll', function (req, res){
+  Qualification.find({}, function(error, data){
+    if(error) {
+      return res.status(500).json({ success: false, data: err.message});
+    }
+    res.status(200).json(data);
+  });
+});
+
 module.exports = router;
