@@ -31,6 +31,7 @@ router.post('/post', function (req, res){
           total += qualificationExisting.ratings[i];
       }
       qualificationExisting.average = (total / qualificationExisting.ratings.length).toFixed(1);
+      qualificationExisting.feedbacks.push(feedback);
       qualificationExisting.save(function(err, data) {
           if(err) {
             return res.status(500).json({ success: false, data: err.message});
@@ -42,7 +43,7 @@ router.post('/post', function (req, res){
         mode: mode,
         intensity: intensity,
         ratings: [quantity],
-        feedback: feedback
+        feedbacks: [feedback]
       });
       qualification.save(function(err, data) {
           if(err) {

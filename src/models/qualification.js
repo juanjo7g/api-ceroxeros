@@ -2,10 +2,10 @@ var mongoose = require('mongoose')
 var Schema   = mongoose.Schema;
 
 var qualificationSchema = new Schema({
-  ratings:   [ Number ],
+  ratings:    [ Number ],
   mode:       { type: String },
   intensity:  { type: Number },
-  feedback:   { type: String },
+  feedbacks:  [ String ],
   average:    { type: Number }
 });
 
