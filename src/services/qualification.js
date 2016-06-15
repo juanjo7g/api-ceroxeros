@@ -20,18 +20,39 @@ router.post('/post', function (req, res){
   if (quantity == undefined || quantity == '') {
     return res.status(400).json({ success: false, data: 'Cantidad invalida'});
   }
-  var qualification = new Qualification({
-    mode: mode,
-    intensity: intensity,
-    quantity: quantity,
-    feedback: feedback
-  });
-  qualification.save(function(err, data) {
-      if(err) {
-        return res.status(500).json({ success: false, data: err.message});
+  Qualification.findOne({mode: mode, intensity:intensity}, function (err, qualificationExisting) {
+    if (err) {
+      return res.status(500).json({ success: false, data: err.message});
+    }
+    if (qualificationExisting != null) {
+      qualificationExisting.ratings.push(quantity);
+      var total = 0;
+      for(var i = 0; i < qualificationExisting.ratings.length; i++) {
+          total += qualificationExisting.ratings[i];
       }
-    res.status(200).json({success: true, data: data});
+      qualificationExisting.average = (total / qualificationExisting.ratings.length).toFixed(1);
+      qualificationExisting.save(function(err, data) {
+          if(err) {
+            return res.status(500).json({ success: false, data: err.message});
+          }
+        res.status(200).json({success: true, data: data});
+      });
+    } else {
+      var qualification = new Qualification({
+        mode: mode,
+        intensity: intensity,
+        ratings: [quantity],
+        feedback: feedback
+      });
+      qualification.save(function(err, data) {
+          if(err) {
+            return res.status(500).json({ success: false, data: err.message});
+          }
+        res.status(200).json({success: true, data: data});
+      });
+    }
   });
+
 });
 
 router.get('/getAll', function (req, res){
