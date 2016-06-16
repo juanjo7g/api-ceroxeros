@@ -90,7 +90,7 @@ router.post('/post', function (req, res){
   var token = req.body.token;
 
   if (name == undefined || name == '') {
-    return res.status(401).json({ success: false, data: 'Nombre completo invalido'});
+    return res.status(400).json({ success: false, data: 'Nombre completo invalido'});
   }
   if (username == undefined || username == '') {
     return res.status(400).json({ success: false, data: 'Nombre de usuario invalido'});

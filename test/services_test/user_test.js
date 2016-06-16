@@ -87,7 +87,7 @@ describe("Prueba Unitaria services/user.js",function(){
   });
 
   it("Prueba metodo post con usuario y contraseñas que no coinciden",function(done){
-    var body = { username : 'test', password1 : 'test1', password2 : 'test2' };
+    var body = { username : 'test', password1 : 'testpass1', password2 : 'testpass2' };
     server
     .post("/api/v1/user/post")
     .type('form')
@@ -100,7 +100,7 @@ describe("Prueba Unitaria services/user.js",function(){
   });
 
   it("Prueba metodo post con usuario existente",function(done){
-    var body = { username : 'test', password1 : 'test', password2 : 'test' };
+    var body = { username : 'test', password1 : 'testpass', password2 : 'testpass' };
     server
     .post("/api/v1/user/post")
     .type('form')
