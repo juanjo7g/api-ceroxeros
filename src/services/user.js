@@ -89,8 +89,14 @@ router.post('/post', function (req, res){
   var name = req.body.name;
   var token = req.body.token;
 
+  if (name == undefined || name == '') {
+    return res.status(401).json({ success: false, data: 'Nombre completo invalido'});
+  }
   if (username == undefined || username == '') {
-    return res.status(400).json({ success: false, data: 'Usuario invalido'});
+    return res.status(400).json({ success: false, data: 'Nombre de usuario invalido'});
+  }
+  if (!util.validarEmail(email)) {
+    return res.status(400).json({ success: false, data: 'Email invalido'});
   }
   if (password1 == undefined || password1 == '' || password2 == undefined || password2 == '') {
     return res.status(400).json({ success: false, data: 'Contraseña invalida'});
@@ -98,8 +104,8 @@ router.post('/post', function (req, res){
   if (password1 != password2) {
     return res.status(400).json({ success: false, data: 'Las contraseñas no coinciden'});
   }
-  if (!util.validarEmail(email)) {
-    return res.status(400).json({ success: false, data: 'Email invalido'});
+  if (password1.length < 5) {
+    return res.status(400).json({ success: false, data: 'Las contraseña debe ser de mínimo 5 caracteres'});
   }
   if (token == undefined || token == '') {
     token = util.generateToken();
